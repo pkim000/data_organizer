@@ -1,14 +1,23 @@
-//
-//  main.cpp
-//  data_organizer
-//
-//  Created by Peter q on 7/13/24.
-//
-
 #include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main() {
+    string fileName;
+    cout << "Enter file name: ";
+    cin >> fileName;
+    transform(fileName.begin(), fileName.end(), fileName.begin(), ::toupper);
+    fileName.append(".csv");
+    
+    fstream file;
+    file.open(fileName);
+    
+    if (!file.is_open()){
+        cout << "Error opening file" << endl;
+    }
+    else{
+        
+    }
+    
 }

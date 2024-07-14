@@ -25,6 +25,8 @@
 /* Begin PBXFileReference section */
 		F032B0322C4348E60001AA7A /* data_organizer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = data_organizer; sourceTree = BUILT_PRODUCTS_DIR; };
 		F032B0352C4348E60001AA7A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F032B03C2C4349A90001AA7A /* TSLAI.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = TSLAI.csv; path = ../../TSLAI.csv; sourceTree = "<group>"; };
+		F032B03D2C4349A90001AA7A /* TSLA.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = TSLA.csv; path = ../../TSLA.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,8 @@
 			isa = PBXGroup;
 			children = (
 				F032B0352C4348E60001AA7A /* main.cpp */,
+				F032B03D2C4349A90001AA7A /* TSLA.csv */,
+				F032B03C2C4349A90001AA7A /* TSLAI.csv */,
 			);
 			path = data_organizer;
 			sourceTree = "<group>";

@@ -21,7 +21,7 @@ int main() {
     rdFile.open(fileName);
     wrtFile.open("revenue_data.csv");
     // opening file test
-    if (!rdFile.is_open()){
+    if (!rdFile.is_open()) {
         cout << "Error opening file" << endl;
     }
     else{
@@ -30,19 +30,33 @@ int main() {
         string dataMetric;
         
         getline(rdFile, years);
-        years.erase(0,4);
-        years.insert(0, "Ticker");
-        years.erase(31, years.size());
+        years.erase(0,4); //removes "Year"
+        years.insert(0, "Ticker"); //replaces it with ticker
+        years.erase(31, years.size()); //removes " - 2007"
         wrtFile << years << endl;
         
         //writing revenue data into file (past 5 years)
+        string searchValue;
+        string compareValue;
+        string dataLine;
+        long searchLength;
         
+        cout << "Enter specific data to find: ";
+        cin.ignore();
+        getline(cin, searchValue);
+        searchLength = searchValue.length(); //assigns length of searched value
         
-        
-        
-        
+        while (getline(rdFile, dataLine)) {
+            compareValue = dataLine.substr(0, searchLength);
+            if (compareValue == searchValue) {
+                break;
+            }
+        }
+        dataLine.erase(0, searchLength + 1); //erases the data name
+        dataLine.insert(0, tickerName + ","); //adds ticker name to replace the data name
+        dataLine.erase(dataLine.length() - 8, dataLine.length()); //removes "-upgrade"
+        wrtFile << dataLine << endl;
     }
     rdFile.close();
     wrtFile.close();
-    
 }

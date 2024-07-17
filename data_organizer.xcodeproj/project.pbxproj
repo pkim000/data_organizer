@@ -27,6 +27,7 @@
 		F032B0352C4348E60001AA7A /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		F032B03C2C4349A90001AA7A /* TSLAI.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = TSLAI.csv; path = ../../TSLAI.csv; sourceTree = "<group>"; };
 		F032B03D2C4349A90001AA7A /* TSLA.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = TSLA.csv; path = ../../TSLA.csv; sourceTree = "<group>"; };
+		F0B856522C44BE97006D5480 /* NVDA.csv */ = {isa = PBXFileReference; lastKnownFileType = text; name = NVDA.csv; path = ../../NVDA.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +63,7 @@
 				F032B0352C4348E60001AA7A /* main.cpp */,
 				F032B03D2C4349A90001AA7A /* TSLA.csv */,
 				F032B03C2C4349A90001AA7A /* TSLAI.csv */,
+				F0B856522C44BE97006D5480 /* NVDA.csv */,
 			);
 			path = data_organizer;
 			sourceTree = "<group>";

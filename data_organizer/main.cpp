@@ -4,27 +4,44 @@
 using namespace std;
 
 int main() {
-    // getting file & ticker name data
-    string fileName;
-    string tickerName;
-    
-    cout << "Enter file name: ";
-    cin >> fileName;
-    transform(fileName.begin(), fileName.end(), fileName.begin(), ::toupper);
-    tickerName = fileName;
-    fileName.append(".csv");
-    
-    // file reading and writing start
     ifstream rdFile;
     ofstream wrtFile;
     
-    rdFile.open(fileName);
-    wrtFile.open("revenue_data.csv");
-    // opening file test
-    if (!rdFile.is_open()) {
-        cout << "Error opening file" << endl;
+    // file creation
+    string answer;
+    cout << "Enter name of file you want to write into (type y to make a file): ";
+    getline(cin, answer);
+    
+    if (answer == "y") {
+        string createFileName;
+        cout << "Enter name of file to create: ";
+        getline(cin, createFileName);
+        createFileName.append(".csv");
+        wrtFile.open(createFileName);
     }
-    else{
+    else {
+        answer.append(".csv");
+        wrtFile.open(answer);
+    }
+    
+    string yesOrNo;
+    cout << "Would you like to write years data? (y or n): ";
+    getline(cin, yesOrNo);
+    
+    if (yesOrNo == "y") {
+        string yearsDataFile;
+        
+        cout << "Enter file name that has years data: ";
+        getline(cin, yearsDataFile);
+        transform(yearsDataFile.begin(), yearsDataFile.end(), yearsDataFile.begin(), ::toupper);
+        yearsDataFile.append(".csv");
+        
+        rdFile.open(yearsDataFile);
+        
+        // opening file test
+        if (!rdFile.is_open()) {
+            cout << "Error opening file" << endl;
+        }
         // writing list of years into file (first 5 from orig file)
         string years;
         string dataMetric;
@@ -35,28 +52,74 @@ int main() {
         years.erase(31, years.size()); //removes " - 2007"
         wrtFile << years << endl;
         
-        //writing revenue data into file (past 5 years)
-        string searchValue;
-        string compareValue;
-        string dataLine;
-        long searchLength;
+        cout << "Added years data to user data file" << endl;
+        rdFile.close();
+    }
+    
+    bool programStatus = true;
+
+    while (programStatus) {
+        // reading and getting data
+        string fileName;
+        string tickerName;
         
-        cout << "Enter specific data to find: ";
-        cin.ignore();
-        getline(cin, searchValue);
-        searchLength = searchValue.length(); //assigns length of searched value
+        cout << "Enter file name to collect data from: ";
+        getline(cin, fileName);
+        /*
+        if (fileName == "quit"){
+            break;
+        }
+         */
         
-        while (getline(rdFile, dataLine)) {
-            compareValue = dataLine.substr(0, searchLength);
-            if (compareValue == searchValue) {
-                break;
+        transform(fileName.begin(), fileName.end(), fileName.begin(), ::toupper);
+        tickerName = fileName;
+        fileName.append(".csv");
+        
+        rdFile.open(fileName);
+        
+        // opening file test
+        if (!rdFile.is_open()) {
+            cout << "Error opening file" << endl;
+        }
+        else{
+            
+            while (true) {
+                //writing revenue data into file (past 5 years)
+                string searchValue;
+                string compareValue;
+                string dataLine;
+                long searchLength;
+                
+                cout << "Enter specific data to find (q = change file, qq = end program): ";
+                getline(cin, searchValue);
+                
+                if (searchValue == "q") {
+                    rdFile.close();
+                    break;
+                }
+                else if (searchValue == "qq") {
+                    programStatus = false;
+                    break;
+                }
+                else {
+                    searchLength = searchValue.length(); //assigns length of searched value
+                    
+                    while (getline(rdFile, dataLine)) {
+                        compareValue = dataLine.substr(0, searchLength);
+                        if (compareValue == searchValue) {
+                            break;
+                        }
+                    }
+                    dataLine.erase(0, searchLength + 1); //erases the data name
+                    dataLine.insert(0, tickerName + ","); //adds ticker name to replace the data name
+                    dataLine.erase(dataLine.length() - 8, dataLine.length()); //removes "-upgrade"
+                    cout << dataLine << endl;
+                    rdFile.close();
+                    rdFile.open(fileName);
+                }
             }
         }
-        dataLine.erase(0, searchLength + 1); //erases the data name
-        dataLine.insert(0, tickerName + ","); //adds ticker name to replace the data name
-        dataLine.erase(dataLine.length() - 8, dataLine.length()); //removes "-upgrade"
-        wrtFile << dataLine << endl;
+        rdFile.close();
+        wrtFile.close();
     }
-    rdFile.close();
-    wrtFile.close();
 }

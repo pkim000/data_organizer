@@ -8,22 +8,13 @@ int main() {
     ofstream wrtFile;
     
     // file creation
-    string answer;
-    cout << "Enter name of file you want to write into (type y to make a file): ";
-    getline(cin, answer);
-    
-    if (answer == "y") {
-        string createFileName;
-        cout << "Enter name of file to create: ";
-        getline(cin, createFileName);
-        createFileName.append(".csv");
-        wrtFile.open(createFileName);
-    }
-    else {
-        answer.append(".csv");
-        wrtFile.open(answer);
-    }
-    
+    string inputFileName;
+    cout << "Enter name of file to write into or name of file to create: ";
+    getline(cin, inputFileName);
+    inputFileName.append(".csv");
+    wrtFile.open(inputFileName, ios::app);
+    cout << "Opened " << inputFileName << endl;
+
     string yesOrNo;
     cout << "Would you like to write years data? (y or n): ";
     getline(cin, yesOrNo);
@@ -65,12 +56,6 @@ int main() {
         
         cout << "Enter file name to collect data from: ";
         getline(cin, fileName);
-        /*
-        if (fileName == "quit"){
-            break;
-        }
-         */
-        
         transform(fileName.begin(), fileName.end(), fileName.begin(), ::toupper);
         tickerName = fileName;
         fileName.append(".csv");
@@ -113,13 +98,16 @@ int main() {
                     dataLine.erase(0, searchLength + 1); //erases the data name
                     dataLine.insert(0, tickerName + ","); //adds ticker name to replace the data name
                     dataLine.erase(dataLine.length() - 8, dataLine.length()); //removes "-upgrade"
-                    cout << dataLine << endl;
+                    wrtFile << dataLine << endl;
+                    cout << searchValue << " data written to " << inputFileName
+                    << " from " << fileName << endl;
+                    
                     rdFile.close();
                     rdFile.open(fileName);
                 }
             }
         }
         rdFile.close();
-        wrtFile.close();
     }
+    wrtFile.close();
 }

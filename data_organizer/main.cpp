@@ -95,12 +95,17 @@ int main() {
                             break;
                         }
                     }
-                    dataLine.erase(0, searchLength + 1); //erases the data name
-                    dataLine.insert(0, tickerName + ","); //adds ticker name to replace the data name
-                    dataLine.erase(dataLine.length() - 8, dataLine.length()); //removes "-upgrade"
-                    wrtFile << dataLine << endl;
-                    cout << searchValue << " data written to " << inputFileName
-                    << " from " << fileName << endl;
+                    if (!rdFile.eof()) {
+                        dataLine.erase(0, searchLength + 1); //erases the data name
+                        dataLine.insert(0, tickerName + ","); //adds ticker name to replace the data name
+                        dataLine.erase(dataLine.length() - 8, dataLine.length()); //removes "-upgrade"
+                        wrtFile << dataLine << endl;
+                        cout << searchValue << " data written to " << inputFileName
+                        << " from " << fileName << endl;
+                    }
+                    else {
+                        cout << "Data value " << searchValue << " not found\n";
+                    }
                     
                     rdFile.close();
                     rdFile.open(fileName);

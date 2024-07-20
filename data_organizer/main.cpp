@@ -57,6 +57,9 @@ int main() {
         
         cout << "Enter file name to collect data from (enter 'q' to end program): ";
         getline(cin, fileName);
+        if (fileName == "q") {
+            break;
+        }
         transform(fileName.begin(), fileName.end(), fileName.begin(), ::toupper);
         tickerName = fileName;
         fileName.append(".csv");
@@ -72,6 +75,7 @@ int main() {
                 string compareValue;
                 string dataLine;
                 long searchLength;
+                long tickerLength;
                 
                 cout << "Enter specific data to find (q = change file, qq = end program): ";
                 getline(cin, searchValue);
@@ -86,6 +90,7 @@ int main() {
                 }
                 else {
                     searchLength = searchValue.length();
+                    tickerLength = tickerName.length();
                     //searches through file to find searchvalue, breaks early if found
                     while (getline(rdFile, dataLine)) {
                         compareValue = dataLine.substr(0, searchLength);
@@ -98,7 +103,7 @@ int main() {
                         dataLine.erase(0, searchLength + 1); //erases data name
                         dataLine.insert(0, tickerName + ","); //replaces w/ ticker
                         dataLine.erase(dataLine.length() - 8, dataLine.length()); //erases ",upgrade"
-                        //dataLine.erase(searchLength, dataLine.find(",", searchLength));
+                        dataLine.erase(tickerLength + 1, dataLine.find(",", tickerLength + 1) - tickerLength); //erases TTM data
                         wrtFile << dataLine << endl;
                         cout << searchValue << " data written to " << inputFileName
                         << " from " << fileName << endl;
